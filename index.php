@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head><title>Report of <?php echo $_GET['q']; ?></title>
@@ -18,25 +17,24 @@
         height: 100%;
       }
 /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
+ html,
+ body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
       }
-
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: "Roboto", "sans-serif";
-        line-height: 30px;
-        padding-left: 10px;
+ #floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
       }
 .btn {
   background-color: #f4511e;
@@ -162,18 +160,17 @@ date_default_timezone_set($get['timezone']);
  ?>
 
 	
+<h2>
 
-  <h2>
+<?php 
+echo $country; 
+echo "<center><h2>".$desc."</h1></center>";
+?>
 
-		<?php 
-		echo $country; 
-		echo "<center><h2>".$desc."</h1></center>";
-		?>
+</h2>
 
 
-	</h2>
-
-<div class="row">
+	<div class="row">
   <div class="column" style="background-color:#a0d2eb;">
     <h1>Today</h1>
       <?php echo $logoA;?>
@@ -204,18 +201,15 @@ date_default_timezone_set($get['timezone']);
     </h2>
    						
   </div>
-</div>
+  </div>
 
 
-<div class="row2">
+  <div class="row2">
   <div class="column2" style="background-color:black;">
- 
-    <div id="map"></div>
- </div>
+  <div id="map"></div>
+  </div>
   
   <div class="column2" style="background-color:#001f3f;">
-    <h2>Something Interesting!!!</h2>
-    <p>Some text..</p>
   </div>
 </div>
 -->
