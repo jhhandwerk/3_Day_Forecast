@@ -17,7 +17,7 @@ was not able to get the weather forecast and the map to load on the same
 click. If anyone reading this has any input about how to fix this problem, 
 feel free. 
 
-I developed and tested this using xampp. 
+I developed and tested this using xampp. The background image was sourced from [Pexels](https://www.pexels.com/).
 
 
 ![](img/app_pic.jpg)
