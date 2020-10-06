@@ -7,7 +7,9 @@ The app uses the OpenWeathermap 5 day/ 3 Hour Forecast API. Access
 to this API is free but it is not ideal for showing daily high and 
 low tempertures because it gives the average high and low temperature
 for a 3 hour time period. This API option is ok for demonstration, but 
-for production, the paid Daily Forecast 16 days API option is better.
+for production, the paid [Daily Forecast 16 days API](https://openweathermap.org/forecast16) option is better.
+
+
 
 I used PHP to get and display the weather forecast. I used JavaScript
 provided in the Google API documentation for the map. Unfortunately, I 
