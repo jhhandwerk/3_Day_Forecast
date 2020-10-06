@@ -3,7 +3,7 @@ This is a simple web app that gives you a 3 day weather forecast
 for any postal code in Japan. It also allows you to search a map 
 on the same page. 
 
-The app uses the OpenWeathermap 5 day/ 3 Hour Forecast API. Access 
+The app uses the OpenWeather [5 day/ 3 Hour Forecast API](https://openweathermap.org/forecast5). Access 
 to this API is free but it is not ideal for showing daily high and 
 low tempertures because it gives the average high and low temperature
 for a 3 hour time period. This API option is ok for demonstration, but 
