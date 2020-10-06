@@ -1,56 +1,13 @@
-<!DOCTYPE html>
 <html>
-<head><title>Report of <?php echo $_GET['q']; ?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<link rel="stylesheet" href="style.css">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="style.css">
 
-  <!--map code-->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script defer 
-      src="https://maps.googleapis.com/maps/api/js?key=[API Key]&callback=initMap&libraries=&v=weekly">
-    </script>
-    
-<style>
-  /*style for map*/
- #map {
-        height: 100%;
-      }
-/* Optional: Makes the sample page fill the window. */
- html,
- body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-      }
- #floating-panel {
-  position: absolute;
-  top: 10px;
-  left: 25%;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: "Roboto", "sans-serif";
-  line-height: 30px;
-  padding-left: 10px;
-      }
-.btn {
-  background-color: #f4511e;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  font-size: 16px;
-  margin: 4px 2px;
-  opacity: 0.6;
-  transition: 0.3s;
-}
-.btn:hover {opacity: 1}
-</style>
-
-<!--map script-->
+<!--map-->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=[API Key]&callback=initMap&libraries=&v=weekly"></script>
 <script>
       "use strict";
 
@@ -91,30 +48,16 @@
       }
     </script>
 
-
 </head>
-
 <body>
 
-<div>
-<!--form for weather-->
-<form class="example" method="GET" action="index.php" style="margin:auto;max-width:350px">
-<h2>Find the weather and a map using a postal code</h2>
-<label>Search Weather</label>
-<input type="textbox" value="532-0013" name="q" required>
-<button type="submit" class="fa fa-search">Search</button>
-</form>
-</div>
+<video autoplay muted loop id="myVideo">
+  <source src="img/rain_on_leaves.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
 
-<!--form for map-->
-<div>
-<form class="example" method="GET" action="index.php" style="margin:auto;max-width:350px">
-<label>Search Map</label>  
-<input id="address" type="textbox" value="532-0013" name="q" required>
-<button id="find"  type="button" class="fa fa-search">Search</button>
-</form>
-</div>
 
+<!--weather-->
 <?php
 error_reporting(0);
 $get = json_decode(file_get_contents('http://ip-api.com/json/'),true);
@@ -122,25 +65,36 @@ $get = json_decode(file_get_contents('http://ip-api.com/json/'),true);
 
 date_default_timezone_set($get['timezone']);
  $city = $_GET['q'];
- $string =  "http://api.openweathermap.org/data/2.5/forecast?zip=".$city.",jp&units=metric&cnt=3&appid=[API Key]";
+ $string =  "http://api.openweathermap.org/data/2.5/forecast?zip=".$city.",jp&units=metric&appid=d21182cea448ccd30b383aa34b9af45a";
 
+
+ 
  $data = json_decode(file_get_contents($string),true);
 
- $temp = $data['list'][0]['main']['temp'];
- $temp2 = $data['list'][1]['main']['temp'];
- $temp3 = $data['list'][2]['main']['temp'];
+ $dayA = $data['list'][0]['dt_txt'];
+ $dayB = $data['list'][8]['dt_txt'];
+ $dayC = $data['list'][16]['dt_txt'];
+
+
+ $descA = $data['list'][0]['weather'][0]['description'];
+ $descB = $data['list'][8]['weather'][0]['description'];
+ $descC = $data['list'][16]['weather'][0]['description'];
+
+ $tempA = $data['list'][0]['main']['temp'];
+ $tempB = $data['list'][8]['main']['temp'];
+ $tempC = $data['list'][16]['main']['temp'];
  
  $temp_minA = $data['list'][0]['main']['temp_min'];
  $temp_maxA = $data['list'][0]['main']['temp_max'];
- $temp_minB = $data['list'][1]['main']['temp_min'];
- $temp_maxB = $data['list'][1]['main']['temp_max'];
- $temp_minC = $data['list'][2]['main']['temp_min'];
- $temp_maxC = $data['list'][2]['main']['temp_max'];
+ $temp_minB = $data['list'][8]['main']['temp_min'];
+ $temp_maxB = $data['list'][8]['main']['temp_max'];
+ $temp_minC = $data['list'][16]['main']['temp_min'];
+ $temp_maxC = $data['list'][16]['main']['temp_max'];
 
  //i fixed the one below and made the following 2
  $iconA = $data['list'][0]['weather'][0]['icon'];
- $iconB = $data['list'][1]['weather'][0]['icon'];
- $iconC = $data['list'][2]['weather'][0]['icon'];
+ $iconB = $data['list'][8]['weather'][0]['icon'];
+ $iconC = $data['list'][16]['weather'][0]['icon'];
 
  $country =  "<h1><b>".$data['city']['name']."...".$data['city']['country']."</h1></b>";
  
@@ -148,9 +102,15 @@ date_default_timezone_set($get['timezone']);
  $logoB = "<center><img src='http://openweathermap.org/img/w/".$iconB.".png'></center>";
  $logoC = "<center><img src='http://openweathermap.org/img/w/".$iconC.".png'></center>";
  
- $temperature =  "<b>Current Temperature: ".$temp."°C</b><br>";
- $temperature2 =  "<b>Current Temperature: ".$temp2."°C</b><br>";
- $temperature3 =  "<b>Current Temperature: ".$temp3."°C</b><br>";
+ $dateA = "<b>".$dayA."</br>";
+ $dateB = "<b>".$dayB."</br>";
+ $dateC = "<b>".$dayC."</br>";
+ $descriptionA = "<b>".$descA."</b><br>";
+ $descriptionB = "<b>".$descB."</b><br>";
+ $descriptionC = "<b>".$descC."</b><br>";
+ $temperatureA =  "<b>Current Temperature: ".$tempA."°C</b><br>";
+ $temperatureB =  "<b>Current Temperature: ".$tempB."°C</b><br>";
+ $temperatureC =  "<b>Current Temperature: ".$tempC."°C</b><br>";
  $max_tempA = "<b>Daily High: ".$temp_maxA."°C</b><br>";
  $low_tempA = "<b>Daily Low: ".$temp_minA."°C</b><br>";
  $max_tempB = "<b>Daily High: ".$temp_maxB."°C</b><br>";
@@ -159,59 +119,102 @@ date_default_timezone_set($get['timezone']);
  $low_tempC = "<b>Daily Low: ".$temp_minC."°C</b><br>";
  ?>
 
-	
-<h2>
-
-<?php 
-echo $country; 
-echo "<center><h2>".$desc."</h1></center>";
-?>
-
-</h2>
 
 
-	<div class="row">
-  <div class="column" style="background-color:#a0d2eb;">
-    <h1>Today</h1>
+
+<!--form for weather-->
+<div class="content">
+<form class="example" method="GET" action="index.php" style="margin:auto;max-width:350px">
+<h2>Enter a postal code</h2>
+<label>Search Weather</label>
+<input type="textbox" value="532-0013" name="q" required>
+<button type="submit" class="fa fa-search">Search</button>
+</form>
+
+
+<!--form for map-->
+<form class="example" method="GET" action="index.php" style="margin:auto;max-width:350px">
+<label>Search Map</label>  
+<input id="address" type="textbox" value="532-0013" name="q" required>
+<button id="find"  type="button" class="fa fa-search">Search</button>
+</form>
+</div>
+</div>
+
+<!--weather display content-->
+<div class = "content2">
+<h3>
+    <?php 
+    echo $country; 
+    echo "<center><h2>".$desc."</h1></center>";
+    ?>
+</h3> 
+</div>
+  
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+       <h1><?php echo $dateA;?></h1>
+       <h2><?php echo $descriptionA;?></h2>
       <?php echo $logoA;?>
     <h2>
-      <?php echo $temperature; ?>
+      <?php echo $temperatureA; ?>
       <?php echo $max_tempA;?>
       <?php echo $low_tempA;?>
     </h2>
-    	
+    </div>
+    <div class="flip-card-back">
+      <h1>Have a nice day</h1> 
+      <p>No matter what the weather...</p> 
+      <p>it's gonna be great.</p>
+    </div>
   </div>
-  <div class="column" style="background-color:#d0bdf4;">
-    <h1>Tomorrow</h1>
+</div>
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+    <h1><?php echo $dateB;?></h1>
+    <h2><?php echo $descriptionB;?></h2>
     <?php echo $logoB;?>
     <h2>
-    <?php echo $temperature2; ?>
     <?php echo $max_tempB;?>
     <?php echo $low_tempB;?>
     </h2>
-    		
+    </div> 
+    <div class="flip-card-back">
+      <h1>Have a nice day tomorrow</h1> 
+      <p>No matter what the weather...</p> 
+      <p>it's gonna be great.</p>
+    </div>
   </div>
-  <div class="column" style="background-color:#8458B3;">
-    <h1>The next day</h1>
+</div>
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+    <h1><?php echo $dateC;?></h1>
+    <h2><?php echo $descriptionC;?></h2>
     <?php echo $logoC;?>
     <h2>
-    <?php echo $temperature3; ?>
     <?php echo $max_tempC;?>
     <?php echo $low_tempC;?> 
     </h2>
-   						
-  </div>
-  </div>
-
-
-  <div class="row2">
-  <div class="column2" style="background-color:black;">
-  <div id="map"></div>
-  </div>
-  
-  <div class="column2" style="background-color:#001f3f;">
+    </div>
+    <div class="flip-card-back">
+      <h1>Have a nice day everyday</h1> 
+      <p>No matter what the weather...</p> 
+      <p>it's gonna be great.</p>
+    </div>
   </div>
 </div>
--->
+
+<!--map display-->
+<div class="row2">
+  <div class="column2">
+    <div id="map"></div>
+ </div>
+</div>
+
+
+
 </body>
 </html>
